@@ -2,7 +2,7 @@ body, html {
   margin: 0;
   padding: 0;
   height: 100%;
-  background: #111;
+  background: #000;
   font-family: 'Segoe UI', sans-serif;
   overflow: hidden;
 }
@@ -13,7 +13,7 @@ body, html {
   height: 100%;
 }
 
-canvas#flames {
+#flames {
   position: absolute;
   top: 0; left: 0;
   width: 100%;
@@ -24,40 +24,33 @@ canvas#flames {
 #character {
   position: absolute;
   bottom: 0;
-  left: 50%;
-  width: 60px;
-  height: 100px;
+  left: -100px;
+  width: 80px;
+  height: 120px;
   background: url('character.svg') no-repeat center/contain;
-  transform: translateX(-50%);
-  opacity: 0;
-  z-index: 2;
+  animation: walkin 4s ease-out forwards 2s;
+  z-index: 3;
+  opacity: 1;
 }
 
-#sign {
-  position: absolute;
-  bottom: 120px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 2rem;
-  padding: 0.5rem 1rem;
-  background: white;
-  color: black;
-  border-radius: 8px;
-  opacity: 0;
-  z-index: 3;
+@keyframes walkin {
+  to {
+    left: 50%;
+    transform: translateX(-50%);
+  }
 }
 
 #explosion {
   position: absolute;
-  width: 200px;
-  height: 200px;
+  width: 0px;
+  height: 0px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: radial-gradient(circle, orange, red, transparent);
-  opacity: 0;
+  background: radial-gradient(circle, white, red, transparent);
   border-radius: 50%;
   z-index: 4;
+  opacity: 0;
 }
 
 #final-message {
@@ -66,8 +59,8 @@ canvas#flames {
   width: 100%;
   text-align: center;
   font-size: 3rem;
-  color: white;
+  color: #fff;
+  letter-spacing: 0.1rem;
   opacity: 0;
-  transform: translateY(-50%);
   z-index: 5;
 }
