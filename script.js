@@ -3,24 +3,21 @@ const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-// Fire particles
 let particles = [];
 function createParticle() {
   return {
     x: Math.random() * canvas.width,
     y: canvas.height,
-    size: Math.random() * 4 + 2,
-    speedY: Math.random() * 2 + 1,
+    size: Math.random() * 6 + 2,
+    speedY: Math.random() * 3 + 1,
     alpha: 1,
-    color: `hsl(${Math.random() * 40 + 10}, 100%, 60%)`
+    color: `hsl(${Math.random() * 60 + 10}, 100%, 60%)`
   };
 }
 
 function animateFire() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  if (particles.length < 150) {
-    particles.push(createParticle());
-  }
+  if (particles.length < 200) particles.push(createParticle());
   particles.forEach((p, index) => {
     p.y -= p.speedY;
     p.alpha -= 0.01;
@@ -35,31 +32,35 @@ function animateFire() {
   requestAnimationFrame(animateFire);
 }
 
-// Sequence
-function beginSequence() {
+// Explosion + Final Phrase
+function sequenceTrigger() {
   setTimeout(() => {
-    document.getElementById('character').style.opacity = 1;
-  }, 2000);
-
-  setTimeout(() => {
-    document.getElementById('sign').style.opacity = 1;
-  }, 4000);
-
-  setTimeout(() => {
-    document.getElementById('sign').style.opacity = 0;
-    document.getElementById('character').style.opacity = 0;
-    document.getElementById('explosion').style.opacity = 1;
-  }, 6000);
+    const explosion = document.getElementById('explosion');
+    explosion.style.transition = 'all 0.8s ease-in-out';
+    explosion.style.opacity = '1';
+    explosion.style.width = '300px';
+    explosion.style.height = '300px';
+  }, 5000);
 
   setTimeout(() => {
     document.getElementById('explosion').style.opacity = 0;
-    document.getElementById('final-message').style.opacity = 1;
-  }, 7500);
+    typeMessage("You Were Born For This");
+  }, 6500);
+}
 
-  setTimeout(() => {
-    document.getElementById('final-message').style.opacity = 0;
-  }, 10000);
+// Typewriter animation
+function typeMessage(text) {
+  const el = document.getElementById('final-message');
+  let index = 0;
+  el.style.opacity = 1;
+  function typeNext() {
+    if (index < text.length) {
+      el.textContent += text[index++];
+      setTimeout(typeNext, 80);
+    }
+  }
+  typeNext();
 }
 
 animateFire();
-beginSequence();
+sequenceTrigger();
